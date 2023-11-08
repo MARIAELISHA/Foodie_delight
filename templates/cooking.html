@@ -1,0 +1,178 @@
+{% extends 'design.html' %}
+{% load static %}
+
+{% block title %} Cooking Class {% endblock title %}
+
+{% block main-content %}
+
+<style>
+    body {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    background-image: url("{% static 'Recommend/images/banner/cooking.png' %}");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    background-clip: text;
+    }
+
+    h2 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    button {
+        background-color: #223fff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 12px 24px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #1991e6;
+    }
+
+    #cooking-game {
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        margin: 20px auto;
+        max-width: 400px;
+    }
+
+    ol {
+        text-align: left;
+        margin: 0;
+        padding-left: 20px;
+    }
+
+    .cooking-instructions,
+    .cooking-result {
+        display: none;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        margin: 20px auto;
+        max-width: 400px;
+    }
+
+    .cooking-instructions h3 {
+        font-size: 20px;
+        margin: 0 0 15px;
+    }
+
+    .cooking-instructions ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .cooking-instructions ul li {
+        margin: 10px 0;
+    }
+
+    .cooking-result h3 {
+        font-size: 20px;
+        margin: 0 0 15px;
+    }
+
+    .cooking-result img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+<div id="cooking-game">
+    <!-- Initial cooking game content -->
+    <h2>Cooking Class</h2>
+    <button id="start-cooking">Start Cooking</button>
+</div>
+
+<div id="lasagna-instructions" style="display: none;">
+    <!-- Lasagna cooking instructions -->
+    <h2>Lasagna Cooking Instructions</h2>
+    <ol>
+        <li>Preheat your oven to 350°F (175°C).</li>
+        <li>Cook lasagna noodles according to package instructions.</li>
+        <li>Prepare a meat sauce with ground beef, onions, and tomatoes. Season with salt, pepper, and Italian herbs.</li>
+        <li>Layer a baking dish with cooked noodles, meat sauce, and ricotta cheese.</li>
+        <li>Repeat the layers and finish with a layer of mozzarella cheese on top.</li>
+        <li>Bake in the preheated oven for 30 minutes or until the cheese is bubbly and golden.</li>
+        <li>Let it cool for a few minutes, then serve and enjoy your homemade Lasagna!</li>
+    </ol>
+    <button id="start-lasagna-cooking">Start Cooking Lasagna</button>
+</div>
+
+<div id="lasagna-result" style="display: none;">
+    <!-- Result message after cooking Lasagna -->
+    <h2>Lasagna Result</h2>
+    <p>You've prepared a delicious Lasagna!</p>
+</div>
+
+<div id="pizza-instructions" style="display: none;">
+    <!-- Pizza cooking instructions -->
+    <h2>Pizza Cooking Instructions</h2>
+    <ol>
+        <li>Preheat your oven to 475°F (245°C).</li>
+        <li>Roll out pizza dough and add your favorite sauce, cheese, and toppings.</li>
+        <li>Bake for about 12-15 minutes or until the crust is golden and the cheese is bubbly.</li>
+        <li>Remove from the oven, slice, and enjoy your homemade Pizza!</li>
+    </ol>
+    <button id="start-pizza-cooking">Start Cooking Pizza</button>
+ 
+<br>
+<br>
+<br>
+<br>    
+</div>
+
+<div id="pizza-result" style="display: none;">
+    <!-- Result message after cooking Pizza -->
+    <h2>Pizza Result</h2>
+    <p>You've prepared a delicious Pizza!</p>
+</div>
+
+<script>
+    // JavaScript code to handle the cooking game
+    document.getElementById("start-cooking").addEventListener("click", function() {
+        document.getElementById("cooking-game").style.display = "none";
+        document.getElementById("lasagna-instructions").style.display = "block";
+    });
+
+    document.getElementById("start-lasagna-cooking").addEventListener("click", function() {
+        document.getElementById("lasagna-instructions").style.display = "none";
+        document.getElementById("lasagna-result").style.display = "block";
+    });
+
+    document.getElementById("start-pizza-cooking").addEventListener("click", function() {
+        document.getElementById("lasagna-result").style.display = "none";
+        document.getElementById("pizza-instructions").style.display = "block";
+    });
+
+    document.getElementById("start-pizza-cooking").addEventListener("click", function() {
+        var pizzaResult = document.getElementById("pizza-result");
+
+        // Pizza cooking logic
+        // You can add your specific instructions and steps here
+
+        var result = "You've prepared a delicious Pizza!";
+        pizzaResult.style.display = "block";
+        pizzaResult.innerHTML = result;
+    });
+</script>
+
+{% endblock main-content %}
+
+
+

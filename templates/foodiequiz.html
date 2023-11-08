@@ -1,0 +1,88 @@
+{% extends 'design.html' %}
+{% load static %}
+
+{% block main-content %}
+<style>
+    body {
+        background-image: url("{% static 'Recommend/images/banner/foodquize.jpg' %}");
+        background-size: cover;
+    }
+</style>
+
+<div class="container">
+    <h1>Foodie Quiz</h1>
+    <p>Test your food knowledge with our interactive foodie quiz.</p>
+
+    <div class="quiz-question">
+        <h2>Question 1: What is the main ingredient in a traditional Margherita pizza?</h2>
+        <ul>
+            <li><label><input type="radio" name="q1" value="a"> A. Tomato</label></li>
+            <li><label><input type="radio" name="q1" value="b"> B. Cheese</label></li>
+            <li><label><input type="radio" name="q1" value="c"> C. Pepperoni</label></li>
+            <li><label><input type="radio" name="q1" value="d"> D. Mushrooms</label></li>
+        </ul>
+    </div>
+
+    <div class="quiz-question">
+        <h2>Question 2: What is the primary ingredient in guacamole?</h2>
+        <ul>
+            <li><label><input type="radio" name="q2" value="a"> A. Apples</label></li>
+            <li><label><input type="radio" name="q2" value="b"> B. Avocado</label></li>
+            <li><label><input type="radio" name="q2" value="c"> C. Anchovies</label></li>
+            <li><label><input type="radio" name="q2" value="d"> D. Almonds</label></li>
+        </ul>
+    </div>
+
+    <div class "quiz-question">
+        <h2>Question 3: Which country is famous for sushi?</h2>
+        <ul>
+            <li><label><input type="radio" name="q3" value="a"> A. Italy</label></li>
+            <li><label><input type="radio" name="q3" value="b"> B. Spain</label></li>
+            <li><label><input type="radio" name="q3" value="c"> C. Japan</label></li>
+            <li><label><input type="radio" name="q3" value="d"> D. France</label></li>
+        </ul>
+    </div>
+
+    <!-- Add more quiz questions here with a similar structure -->
+
+    <button id="submit-button">Submit</button>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</div>
+
+<script>
+    // JavaScript code to handle the quiz
+    document.getElementById("submit-button").addEventListener("click", function() {
+        var answer1 = document.querySelector('input[name="q1"]:checked');
+        var answer2 = document.querySelector('input[name="q2"]:checked');
+        var answer3 = document.querySelector('input[name="q3"]:checked');
+        
+        if (answer1 && answer2 && answer3) {
+            var score = 0;
+            
+            if (answer1.value === "b") {
+                score += 1;
+            }
+
+            if (answer2.value === "b") {
+                score += 1;
+            }
+
+            if (answer3.value === "c") {
+                score += 1;
+            }
+
+            // You can add more questions and scoring logic here
+
+            alert("Your score: " + score);
+        } else {
+            alert("Please answer all questions before submitting.");
+        }
+    });
+</script>
+</style>
+{% endblock main-content %}
