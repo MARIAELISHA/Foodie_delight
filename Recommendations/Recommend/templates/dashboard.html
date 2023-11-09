@@ -1,0 +1,70 @@
+{% extends 'design.html' %}
+{% load static %}
+{% block title %}Food Recommendation Dashboard{% endblock %}
+{% block main-content %}
+    <style>
+        /* Dashboard Header Styles */
+        .dashboard-header {
+            background-color: #0e431e;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Welcome Message Styles */
+        .welcome-message {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        /* Quick Links Styles */
+        .quick-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quick-links li {
+            margin-bottom: 10px;
+        }
+
+        /* Recent Activity Styles */
+        .recent-activity {
+            list-style: none;
+            padding: 0;
+        }
+
+        .recent-activity li {
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <div class="dashboard-header">
+        <h1>Welcome to the Food Recommendation Dashboard</h1>
+        <p class="welcome-message">Hello,{{username}}! Discover delicious food recommendations just for you!</p>
+    </div>
+
+    <h2>Quick Links</h2>
+    <ul class="quick-links">
+        <li><a href="#">Explore New Recipes</a></li>
+        <li><a href="#">Favorite Dishes</a></li>
+        <li><a href="#">Profile Settings</a></li>
+    </ul>
+
+    <h2>Recent Activity</h2>
+    <ul class="recent-activity">
+        <li>You tried a new recipe: "Spicy Thai Noodles"</li>
+        <li>Recommended dish: "Sushi Platter" from Sushi Palace</li>
+        <li>Your account was last updated on [Date]</li>
+    </ul>
+
+    <!-- Add more food-related content or features here -->
+
+    <a href="#">Logout</a> <!-- Example logout link -->
+<br>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock main-content %}    
+

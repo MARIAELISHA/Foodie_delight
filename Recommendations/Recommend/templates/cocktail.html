@@ -1,0 +1,122 @@
+{% extends 'design.html' %}
+{% load static %}
+
+{% block title %} Cocktail Mixer {% endblock title %}
+
+{% block main-content %}
+<style>
+     body {
+        background-image: url("{% static 'Recommend/images/banner/cocktail.jpeg' %}");
+        background-size: cover;
+    }
+
+     #cocktail-game {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #F5F5F5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  #ingredients,
+  #mixing-area,
+  #result {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    display: inline-blocks;
+  }
+
+  .ingredient {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #b8cadc;
+    color: rgb(8, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .ingredient:hover {
+    background-color: #0056b3;
+  }
+
+  #selected-ingredients {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  #mix-button {
+    margin-top: 20px;
+    padding: 15px 30px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  #mix-button:hover {
+    background-color: #218838;
+  }
+</style>
+
+<div class="container">
+  <div id="cocktail-game">
+    <div id="ingredients">
+      <h2>Ingredients</h2>
+      <ul>
+        <li><button class="ingredient" data-name="vodka">Vodka</button></li>
+        <li><button class="ingredient" data-name="rum">Rum</button></li>
+        <li><button class="ingredient" data-name="tequila">Tequila</button></li>
+        <!-- Add more ingredients as needed -->
+      </ul>
+    </div>
+
+    <div id="mixing-area">
+      <h2>Mixing Area</h2>
+      <div id="selected-ingredients"></div>
+      <button id="mix-button">Mix</button>
+    </div>
+
+    <div id="result">
+      <h2>Result</h2>
+      <p id="cocktail-name">Your Cocktail: <span id="result-name">Mixed Drink</span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const ingredients = document.querySelectorAll(".ingredient");
+    const selectedIngredients = document.getElementById("selected-ingredients");
+    const mixButton = document.getElementById("mix-button");
+    const resultName = document.getElementById("result-name");
+
+    ingredients.forEach((ingredient) => {
+      ingredient.addEventListener("click", function () {
+        const ingredientName = ingredient.getAttribute("data-name");
+        const ingredientElement = document.createElement("span");
+        ingredientElement.textContent = ingredientName;
+        selectedIngredients.appendChild(ingredientElement);
+      });
+    });
+
+    mixButton.addEventListener("click", function () {
+      const mixedIngredients = selectedIngredients.textContent;
+      // You can implement more complex logic here to determine the cocktail name based on selected ingredients.
+      resultName.textContent = "Mixed " + mixedIngredients + " Cocktail";
+    });
+  });
+</script>
+</style>
+</div>
+{% endblock main-content %}

@@ -1,0 +1,27 @@
+{% extends 'design.html' %}
+{% load static %}
+{% block title %}Recommendation_NEW{% endblock title %}
+{% block main-content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Recommendation Results</div>
+                <div class="card-body">
+                    {% if recommendations %}
+                    <h4>Recommended food items:</h4>
+                    <ul>
+                        {% for food, restaurant in recommendations %}
+                        <li>Since you're looking for {{ new_food_item }}, you can look for {{ food }} from this Restaurant: {{ restaurant }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>No recommendations available for this food item.</p>
+                    {% endif %}
+                    <a href="{% url 'recommend' %}" class="btn btn-primary">Go Back to Recommendation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}
