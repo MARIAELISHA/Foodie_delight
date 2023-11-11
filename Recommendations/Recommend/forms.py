@@ -3,8 +3,9 @@ from django import forms
 from .models import *
 
 
-class UserForm(forms.ModelForm):
+class SignUpForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.EmailField(max_length=254, required=True, help_text='Required. Enter a valid email address.')
 
     class Meta:
         model = User

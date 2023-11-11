@@ -17,6 +17,7 @@ from sklearn.preprocessing import LabelEncoder
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
+from .forms import SignUpForm,RecommendForm
 
 
 # Create your views here.
@@ -129,39 +130,14 @@ class CustomRecommendFood(RecommendForm):
 # Recommendation Algorithm
 # Recommendation Algorithm
     # Function to recommend based on user input
-def recommend_food(new_food):
-    label_encoder = LabelEncoder()
-    try:
-        # Transform the new food item into the same feature space
-        new_food_encoded = label_encoder.transform([new_food])
 
-        # For user rating, you can use a default value (e.g., the average rating from the dataset)
-        user_rating = data['Ratings'].mean()
-
-        # Find k-nearest neighbors based on both the new food item and the default user rating
-        input_data = [[new_food_encoded[0], user_rating]]  # Create a list of lists
-        distances, indices = knn.kneighbors(input_data)
-
-        # Generate a recommendation list including restaurant information
-        recommendation_list = []
-        for i in indices[0]:
-            recommended_food = label_encoder.inverse_transform([data.at[i, 'Tokens']])  # Change 'Labels' to 'Tokens'
-            restaurant_id = data.at[i, 'Buisness_id']  # Use square brackets, not parentheses
-            recommendation_list.append((recommended_food[0], restaurant_id))
-
-        return recommendation_list
-
-    except ValueError as e:
-        # Handle the case where the label is not in the LabelEncoder's vocabulary
-        print(f"Label not found: {e}")
-        return []
-
-def recom_p(request):
-    return render(request,'recommend.html')
 
 def recommend(request):
+    return render(request,'recommend.html')
+
+def recommend_result(request):
     new_food_item = request.POST.get('new_food_item')
-    if new_food_item =='null_':
+    if new_food_item =='':
         return redirect('http://127.0.0.1:8000')
     else:
         data = pd.read_csv(r"C:\Users\Modern\Project\Recommendations\Food_preprocessed_1.csv", encoding='latin-1')
@@ -170,6 +146,31 @@ def recommend(request):
         knn = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=20, n_jobs=-1)  # You can adjust the number of neighbors (k) as neede
         X = data[['Tokens', 'Ratings']].values
         knn.fit(X)
+    def recommend_food(new_food):
+        try:
+            # Transform the new food item into the same feature space
+            new_food_encoded = label_encoder.transform([new_food])
+
+            # For user rating, you can use a default value (e.g., the average rating from the dataset)
+            user_rating = data['Ratings'].mean()
+
+            # Find k-nearest neighbors based on both the new food item and the default user rating
+            input_data = [[new_food_encoded[0], user_rating]]  # Create a list of lists
+            distances, indices = knn.kneighbors(input_data)
+
+            # Generate a recommendation list including restaurant information
+            recommendation_list = []
+            for i in indices[0]:
+                recommended_food = label_encoder.inverse_transform([data.at[i, 'Tokens']])  # Change 'Labels' to 'Tokens'
+                restaurant_id = data.at[i, 'Buisness_id']  # Use square brackets, not parentheses
+                recommendation_list.append((recommended_food[0], restaurant_id))
+
+            return recommendation_list
+
+        except ValueError as e:
+            # Handle the case where the label is not in the LabelEncoder's vocabulary
+            print(f"Label not found: {e}")
+            return []
 
     recommendations = recommend_food(new_food_item)
     #rows_ = recommendations.to_dict(orient='records')
@@ -182,8 +183,7 @@ def recommend(request):
     else:
         print("No recommendations available for this food item.")
 
-    return render(request,'recommendation.html',{'rows':recommendations})    
-
+    return render(request,'recommendation.html',{'rows':rows}) 
 
 
 #Foodie Quiz
@@ -200,24 +200,19 @@ def cooking(request):
 
 # Register user
 def signUp(request):
-    form = UserForm(request.POST or None)
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('profile')
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
 
-    if form.is_valid():
-        user = form.save(commit=False)
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
-        user.set_password(password)
-        user.save()
-        user = authenticate(username=username, password=password)
 
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return redirect("index")
-
-    context = {'form': form}
-
-    return render(request, 'signUp.html', context)
+def profile(request):
+    return render(request, 'profile.html') 
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'

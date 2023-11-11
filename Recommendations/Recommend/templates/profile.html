@@ -1,0 +1,27 @@
+{% extends 'design.html' %}
+{% load static %}
+{% block main-content %}
+  <div class="profile-container">
+    <h1>User Profile</h1>
+
+    <p>Welcome, {{ user.username }}!</p>
+
+    <h2>Profile Details</h2>
+    <ul>
+      <li><strong>Username:</strong> {{ user.username }}</li>
+      <li><strong>Email:</strong> {{ user.email }}</li>
+      <li><strong>First Name:</strong> {{ user.first_name }}</li>
+      <li><strong>Last Name:</strong> {{ user.last_name }}</li>
+      <li><strong>Country:</strong> {{ user.profile.country }}</li>
+      <li><strong>Age:</strong> {{ user.profile.age }}</li>
+      <!-- Add more profile details as needed -->
+    </ul>
+
+    <h2>Actions</h2>
+    <div class="profile-actions">
+      <button class="btn btn-primary">Edit Profile</button>
+      <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+      <!-- You can add more buttons and links for other actions -->
+    </div>
+  </div>
+{% endblock main-content %}
